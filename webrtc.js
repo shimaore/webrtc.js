@@ -279,6 +279,7 @@ function Peer(options) {
     this.pc.on('addStream', this.handleRemoteStreamAdded.bind(this));
     this.pc.on('addChannel', this.handleDataChannelAdded.bind(this));
     this.pc.on('removeStream', this.handleStreamRemoved.bind(this));
+    this.pc.on('endOfCandidates', this.handleEndOfCandidates.bind(this));
     // Just fire negotiation needed events for now
     // When browser re-negotiation handling seems to work
     // we can use this as the trigger for starting the offer/answer process
@@ -398,6 +399,11 @@ Peer.prototype.onIceCandidate = function (candidate) {
     } else {
         this.logger.log("End of candidates.");
     }
+};
+
+Peer.prototype.onEndOfCandidates = function () {
+    if (this.closed) return;
+    this.send('end-of-candidates');
 };
 
 Peer.prototype.start = function () {
