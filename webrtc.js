@@ -279,7 +279,7 @@ function Peer(options) {
     this.pc.on('addStream', this.handleRemoteStreamAdded.bind(this));
     this.pc.on('addChannel', this.handleDataChannelAdded.bind(this));
     this.pc.on('removeStream', this.handleStreamRemoved.bind(this));
-    this.pc.on('endOfCandidates', this.handleEndOfCandidates.bind(this));
+    this.pc.on('endOfCandidates', this.onEndOfCandidates.bind(this));
     // Just fire negotiation needed events for now
     // When browser re-negotiation handling seems to work
     // we can use this as the trigger for starting the offer/answer process
